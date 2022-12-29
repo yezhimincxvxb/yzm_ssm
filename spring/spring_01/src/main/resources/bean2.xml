@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="userService" class="com.yzm.service.UserService">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userDao" class="com.yzm.dao.impl.UserDaoImpl"/>
+
+    <bean id="employee" class="com.yzm.entity.Employee">
+        <property name="name" value="Lucy"/>
+        <property name="sex" value="女"/>
+        <property name="department">
+            <bean class="com.yzm.entity.Department">
+                <property name="name" value="财务部"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="employee2" class="com.yzm.entity.Employee">
+        <property name="name" value="大卫"/>
+        <property name="sex" value="男"/>
+        <property name="department" ref="department"/>
+        <property name="department.name" value="技术部"/>
+    </bean>
+
+    <bean id="department" class="com.yzm.entity.Department"/>
+
+</beans>

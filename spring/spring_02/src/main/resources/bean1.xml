@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myBean" class="com.yzm.factorybean.MyBean"/>
+
+    <bean id="book" class="com.yzm.entity.Book" scope="prototype"/>
+
+    <!-- 手动装配 -->
+    <bean id="emp" class="com.yzm.autowire.Emp">
+        <property name="name" value="zhangsan"/>
+        <property name="dept" ref="dept"/>
+    </bean>
+
+
+    <!-- 手动装配 -->
+    <bean id="emp2" class="com.yzm.autowire.Emp" autowire="byName">
+        <property name="name" value="lisi"/>
+    </bean>
+
+    <bean id="dept" class="com.yzm.autowire.Dept"/>
+</beans>

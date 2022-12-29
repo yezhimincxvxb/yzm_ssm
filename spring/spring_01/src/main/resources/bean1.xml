@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.yzm.entity.User"/>
+
+    <bean id="book" class="com.yzm.entity.Book">
+        <property name="name" value="葵花宝典"/>
+        <property name="author" value="东方不败"/>
+    </bean>
+
+    <bean id="orders" class="com.yzm.entity.Orders">
+        <constructor-arg name="name" value="电脑"/>
+        <constructor-arg name="address" value="中国"/>
+    </bean>
+
+    <bean id="book2" class="com.yzm.entity.Book" p:name="百科全书" p:author="张三" />
+
+    <bean id="book3" class="com.yzm.entity.Book">
+        <property name="name">
+            <null/>
+        </property>
+        <property name="author">
+            <value><![CDATA[<西游记>]]></value>
+        </property>
+    </bean>
+
+</beans>

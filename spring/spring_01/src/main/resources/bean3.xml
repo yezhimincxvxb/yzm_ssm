@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="student" class="com.yzm.entity.Student">
+        <property name="courses">
+            <array>
+                <value>java</value>
+                <value>c++</value>
+                <value>php</value>
+            </array>
+        </property>
+        <property name="list">
+            <list>
+                <value>低级</value>
+                <value>中级</value>
+                <value>高级</value>
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <value>张三</value>
+                <value>李四</value>
+                <value>王五</value>
+            </set>
+        </property>
+        <property name="map">
+            <map>
+                <entry key="数学" value="90"/>
+                <entry key="语文" value="95"/>
+                <entry key="英语" value="70"/>
+            </map>
+        </property>
+<!--        <property name="courseList">-->
+<!--            <list>-->
+<!--                <ref bean="course1"/>-->
+<!--                <ref bean="course2"/>-->
+<!--            </list>-->
+<!--        </property>-->
+        <property name="courseList" ref="courseList"/>
+    </bean>
+
+    <bean id="course1" class="com.yzm.entity.Course">
+        <property name="name" value="Spring课程"/>
+    </bean>
+    <bean id="course2" class="com.yzm.entity.Course">
+        <property name="name" value="Mysql课程"/>
+    </bean>
+
+    <!-- 提取可重复使用部分 -->
+    <util:list id="courseList">
+        <ref bean="course1"/>
+        <ref bean="course2"/>
+    </util:list>
+</beans>
