@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzm4.mapper.AccountMapper">
+  <resultMap id="BaseResultMap" type="com.yzm4.entity.Account">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="pay_password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="total_money" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="available_money" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="frozen_money" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="version" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, username, pay_password, total_money, available_money, frozen_money, 
+    version, create_date, update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.yzm4.entity.AccountCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from account
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yzm4.entity.AccountCriteria">
+    delete from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yzm4.entity.Account">
+    insert into account (id, user_id, username, 
+      pay_password, total_money, available_money, 
+      frozen_money, version, create_date, 
+      update_date)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{payPassword,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DOUBLE}, #{availableMoney,jdbcType=DOUBLE}, 
+      #{frozenMoney,jdbcType=DOUBLE}, #{version,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yzm4.entity.Account">
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="payPassword != null">
+        pay_password,
+      </if>
+      <if test="totalMoney != null">
+        total_money,
+      </if>
+      <if test="availableMoney != null">
+        available_money,
+      </if>
+      <if test="frozenMoney != null">
+        frozen_money,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null">
+        #{totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="availableMoney != null">
+        #{availableMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="frozenMoney != null">
+        #{frozenMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yzm4.entity.AccountCriteria" resultType="java.lang.Long">
+    select count(*) from account
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update account
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null">
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalMoney != null">
+        total_money = #{record.totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.availableMoney != null">
+        available_money = #{record.availableMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.frozenMoney != null">
+        frozen_money = #{record.frozenMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update account
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      total_money = #{record.totalMoney,jdbcType=DOUBLE},
+      available_money = #{record.availableMoney,jdbcType=DOUBLE},
+      frozen_money = #{record.frozenMoney,jdbcType=DOUBLE},
+      version = #{record.version,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yzm4.entity.Account">
+    update account
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null">
+        total_money = #{totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="availableMoney != null">
+        available_money = #{availableMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="frozenMoney != null">
+        frozen_money = #{frozenMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yzm4.entity.Account">
+    update account
+    set user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      total_money = #{totalMoney,jdbcType=DOUBLE},
+      available_money = #{availableMoney,jdbcType=DOUBLE},
+      frozen_money = #{frozenMoney,jdbcType=DOUBLE},
+      version = #{version,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

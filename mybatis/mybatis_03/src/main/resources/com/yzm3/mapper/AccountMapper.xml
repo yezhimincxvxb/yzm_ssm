@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yzm3.mapper.AccountMapper">
+
+    <select id="listAccountByIf" parameterType="account" resultType="account">
+        select * from account
+        where 1 = 1
+        <if test="account.userId != null and account.userId != ''">
+            and user_id = #{account.userId}
+        </if>
+        <if test="account.username != null and account.username != ''">
+            and username = #{account.username}
+        </if>
+    </select>
+
+    <select id="listAccountByWhere" parameterType="account" resultType="account">
+        select * from account
+        <where>
+            <if test="account.userId != null and account.userId != ''">
+                and user_id = #{account.userId}
+            </if>
+            <if test="account.username != null and account.username != ''">
+                and username = #{account.username}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateBySet" parameterType="account">
+        update account
+        <set>
+            <if test="account.username != null and account.username != ''">
+                username = #{account.username},
+            </if>
+            <if test="account.payPassword != null and account.payPassword != ''">
+                pay_password = #{account.payPassword},
+            </if>
+        </set>
+        where id = #{account.id}
+    </update>
+
+    <select id="listAccountByChoose" parameterType="account" resultType="account">
+        select * from account
+        <where>
+            <choose>
+                <when test="account.userId != null and account.userId != ''">
+                    and user_id = #{account.userId}
+                </when>
+                <when test="account.username != null and account.username != ''">
+                    and username like #{account.username}
+                </when>
+                <otherwise>
+                    and total_money > 7500
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <select id="listAccountByForeach" resultType="account">
+        select * from account
+        <where>
+            <if test="ids != null and ids.size > 0">
+                id in
+                <foreach collection="ids" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="listAccountByBind" parameterType="string" resultType="account">
+        <bind name="pattern" value="'%' + name + '%'"/>
+        select * from account
+        WHERE pay_password LIKE #{pattern}
+    </select>
+
+    <select id="listUserByLike" parameterType="string" resultType="account">
+        select *
+        from account
+        where pay_password like #{name}
+    </select>
+
+    <select id="listUserByCONCAT" parameterType="string" resultType="account">
+        select *
+        from account
+        where pay_password like CONCAT('%', #{name}, '%')
+    </select>
+
+    <sql id="baseSelect">
+        id
+        , user_id, username, pay_password, total_money, available_money, frozen_money, create_date,update_date
+    </sql>
+
+    <sql id="baseIf">
+        <if test="account.userId != null and account.userId != ''">
+            and user_id = #{account.userId}
+        </if>
+        <if test="account.username != null and account.username != ''">
+            and username = #{account.username}
+        </if>
+        <if test="account.payPassword != null and account.payPassword != ''">
+            and pay_password = #{account.payPassword}
+        </if>
+    </sql>
+
+    <select id="listAccountBySQL" parameterType="account" resultType="account">
+        select
+        <include refid="baseSelect"/>
+        from account
+        <where>
+            <include refid="baseIf"/>
+        </where>
+    </select>
+
+</mapper>
