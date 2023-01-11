@@ -23,6 +23,8 @@ public interface AccountMapper {
 
     List<Account> listUserByCONCAT(@Param("name") String name);
 
+    List<Account> listByInstr(@Param("name") String name);
+
     List<Account> listAccountBySQL(@Param("account") Account account);
 
 }

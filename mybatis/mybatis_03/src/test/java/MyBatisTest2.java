@@ -103,6 +103,16 @@ public class MyBatisTest2 {
     }
 
     @Test
+    public void listByInstr() {
+        SqlSession sqlSession = MyBatisUtils.getSqlSession();
+
+        AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
+        List<Account> accounts = accountMapper.listByInstr("o");
+        System.out.println(accounts);
+        sqlSession.close();
+    }
+
+    @Test
     public void listAccountBySQL() {
         SqlSession sqlSession = MyBatisUtils.getSqlSession();
         AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);

@@ -88,6 +88,13 @@
         where pay_password like CONCAT('%', #{name}, '%')
     </select>
 
+    <select id="listByInstr" parameterType="java.lang.String" resultType="account">
+        select *  from account
+        <where>
+            instr(username, #{name})
+        </where>
+    </select>
+
     <sql id="baseSelect">
         id
         , user_id, username, pay_password, total_money, available_money, frozen_money, create_date,update_date
